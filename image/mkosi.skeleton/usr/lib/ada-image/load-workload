@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import tarfile
 
-BASE = Path('/run/h-image')
+BASE = Path('/run/ada-image')
 STAGING = BASE / 'workload'
 
 
@@ -18,7 +18,7 @@ def run(*args):
 
 def main():
     parameters = [p.split('=', 1)[1] for p in Path('/proc/cmdline').read_text().split()
-                  if p.startswith('h-image.workload_sha256=')]
+                  if p.startswith('ada-image.workload_sha256=')]
     if len(parameters) != 1 or not re.fullmatch('[0-9a-f]{64}', parameters[0]):
         raise ValueError('exactly one workload SHA-256 must be embedded in the UKI')
     # A released workload never runs in the ordinary QEMU OS boot check.
@@ -26,7 +26,7 @@ def main():
     if not os.path.ismount('/sys/kernel/config'):
         run('mount', '-t', 'configfs', 'configfs', '/sys/kernel/config')
     subprocess.run(['modprobe', 'tdx_guest'], check=False)
-    report = Path('/sys/kernel/config/tsm/report/h-image-startup')
+    report = Path('/sys/kernel/config/tsm/report/ada-image-startup')
     try:
         report.mkdir()
         if (report / 'provider').read_text().strip() != 'tdx_guest':
@@ -77,14 +77,14 @@ def main():
     archive.unlink()
     if not (STAGING / 'start').is_file():
         raise ValueError('workload must contain a start shell script')
-    print('H_IMAGE_WORKLOAD_VERIFIED: ' + actual, flush=True)
+    print('ADA_IMAGE_WORKLOAD_VERIFIED: ' + actual, flush=True)
     os.chdir(STAGING)
     # No .env files, metadata commands, or config-disk scripts are sourced here.
     # start is application code protected by the workload archive hash.
     environment = {
         'PATH': '/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'C.UTF-8',
-        'H_IMAGE_WORKLOAD_DIR': str(STAGING), 'H_IMAGE_CONFIG_DIR': '/mnt/config',
-        'H_IMAGE_WORKLOAD_SHA256': actual,
+        'ADA_IMAGE_WORKLOAD_DIR': str(STAGING), 'ADA_IMAGE_CONFIG_DIR': '/mnt/config',
+        'ADA_IMAGE_WORKLOAD_SHA256': actual,
     }
     os.execve('/bin/sh', ['/bin/sh', str(STAGING / 'start')], environment)
 

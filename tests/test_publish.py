@@ -28,19 +28,19 @@ class PublishTests(unittest.TestCase):
         self.directory = self.root / 'dist/publish'
         self.directory.mkdir(parents=True)
         archive = b'archive fixture'
-        (self.directory / 'h-image-gcp.tar.gz').write_bytes(archive)
+        (self.directory / 'ada-image-gcp.tar.gz').write_bytes(archive)
         self.environment = {
             'GITHUB_SHA': 'a' * 40, 'GITHUB_WORKFLOW_SHA': 'a' * 40,
-            'GITHUB_REPOSITORY': 'CypherpunkLabs-AI/hiro-vm-image',
+            'GITHUB_REPOSITORY': 'CypherpunkLabs-AI/Ada-vm-image',
             'GITHUB_REF': 'refs/heads/main', 'GITHUB_EVENT_NAME': 'push',
             'GITHUB_RUN_ID': '42', 'GITHUB_RUN_ATTEMPT': '1',
             'GITHUB_STEP_SUMMARY': str(self.root / 'summary'),
-            'GCP_PROJECT_ID': 'cypherpunklabs', 'GCP_IMAGE_BUCKET': 'cypherpunklabs-hiro-images',
+            'GCP_PROJECT_ID': 'cypherpunklabs', 'GCP_IMAGE_BUCKET': 'cypherpunklabs-ada-images',
         }
         manifest = {
-            'kind': 'h-image.os-release.v1', 'source_commit': 'a' * 40, 'workflow_commit': 'a' * 40,
+            'kind': 'ada-image.os-release.v1', 'source_commit': 'a' * 40, 'workflow_commit': 'a' * 40,
             'source_repository': self.environment['GITHUB_REPOSITORY'], 'source_ref': 'refs/heads/main',
-            'files': {'h-image-gcp.tar.gz': {'sha256': hashlib.sha256(archive).hexdigest(), 'size': len(archive)}},
+            'files': {'ada-image-gcp.tar.gz': {'sha256': hashlib.sha256(archive).hexdigest(), 'size': len(archive)}},
             'guest_os_features': ['TDX_CAPABLE', 'UEFI_COMPATIBLE', 'GVNIC'],
             'licenses': ['license-fixture'],
         }
@@ -63,9 +63,9 @@ class PublishTests(unittest.TestCase):
         commands = self.invoke()
         self.assertEqual(commands[0][:3], ['gh', 'attestation', 'verify'])
         create = next(c for c in commands if c[:4] == ['gcloud', 'compute', 'images', 'create'])
-        self.assertEqual(create[4], 'h-image-aaaaaaaaaaaa-42-1')
+        self.assertEqual(create[4], 'ada-image-aaaaaaaaaaaa-42-1')
         self.assertIn('--guest-os-features=TDX_CAPABLE,UEFI_COMPATIBLE,GVNIC', create)
-        self.assertTrue(any(x.startswith('--source-uri=gs://cypherpunklabs-hiro-images/h-image/') for x in create))
+        self.assertTrue(any(x.startswith('--source-uri=gs://cypherpunklabs-ada-images/ada-image/') for x in create))
         self.assertFalse(any(c[:4] == ['gcloud', 'compute', 'instances', 'create'] for c in commands))
         record = json.loads((self.directory / 'gcp-image.json').read_text())
         self.assertEqual(record['status'], 'READY')
@@ -73,7 +73,7 @@ class PublishTests(unittest.TestCase):
         self.assertIn(record['image'], (self.root / 'summary').read_text())
 
     def test_changed_archive_rejected_before_cloud_commands(self):
-        (self.directory / 'h-image-gcp.tar.gz').write_bytes(b'changed')
+        (self.directory / 'ada-image-gcp.tar.gz').write_bytes(b'changed')
         with patch.object(publish, 'run') as commands, self.assertRaisesRegex(ValueError, 'artifact differs'):
             publish.validate(self.directory, self.environment)
         commands.assert_not_called()

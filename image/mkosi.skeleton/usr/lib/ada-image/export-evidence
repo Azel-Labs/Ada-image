@@ -24,7 +24,7 @@ def challenge():
     # Fixed endpoint, no proxy, redirects, credentials, or metadata commands.
     connection = http.client.HTTPConnection('169.254.169.254', timeout=5)
     try:
-        connection.request('GET', '/computeMetadata/v1/instance/attributes/h-image-evidence-nonce',
+        connection.request('GET', '/computeMetadata/v1/instance/attributes/ada-image-evidence-nonce',
                            headers={'Metadata-Flavor': 'Google'})
         response = connection.getresponse()
         if response.status == 404:
@@ -36,7 +36,7 @@ def challenge():
             raise ValueError('oversized evidence challenge')
         value = raw.decode('ascii').strip()
         if not re.fullmatch('[0-9a-f]{128}', value):
-            raise ValueError('h-image-evidence-nonce must be 64 random bytes encoded as 128 lowercase hex characters')
+            raise ValueError('ada-image-evidence-nonce must be 64 random bytes encoded as 128 lowercase hex characters')
         return value
     finally:
         connection.close()
@@ -49,7 +49,7 @@ def frames(evidence):
     encoded = base64.b64encode(payload).decode('ascii')
     chunks = [encoded[i:i + 768] for i in range(0, len(encoded), 768)]
     digest = hashlib.sha256(payload).hexdigest()
-    prefix = 'H_IMAGE_EVIDENCE_V1 ' + evidence['nonce'] + ' '
+    prefix = 'ADA_IMAGE_EVIDENCE_V1 ' + evidence['nonce'] + ' '
     return ([prefix + f'BEGIN {len(chunks)} {digest}'] +
             [prefix + f'DATA {i} {part}' for i, part in enumerate(chunks)] +
             [prefix + 'END ' + digest])
@@ -58,7 +58,7 @@ def frames(evidence):
 def main():
     nonce = challenge()
     if nonce is None:
-        print('H_IMAGE_EVIDENCE_SKIPPED: no diagnostic challenge supplied', flush=True)
+        print('ADA_IMAGE_EVIDENCE_SKIPPED: no diagnostic challenge supplied', flush=True)
         return
     subprocess.run(['modprobe', 'configfs'], check=True)
     if not os.path.ismount('/sys/kernel/config'):
@@ -67,7 +67,7 @@ def main():
     ccel_path = '/sys/firmware/acpi/tables/data/CCEL'
     ccel = read_limited(ccel_path, 16 * 1024 * 1024)
     table = read_limited('/sys/firmware/acpi/tables/CCEL', 4096)
-    report = Path('/sys/kernel/config/tsm/report/h-image-evidence')
+    report = Path('/sys/kernel/config/tsm/report/ada-image-evidence')
     report.mkdir(mode=0o700)
     try:
         if (report / 'provider').read_text().strip() != 'tdx_guest':
@@ -82,11 +82,11 @@ def main():
     if read_limited(ccel_path, 16 * 1024 * 1024) != ccel:
         raise ValueError('CCEL changed during capture; collect again with a fresh challenge')
     evidence = {
-        'schema': 'h-image.boot-evidence.v1', 'nonce': nonce,
+        'schema': 'ada-image.boot-evidence.v1', 'nonce': nonce,
         'quote': base64.b64encode(quote).decode('ascii'),
         'ccel': base64.b64encode(ccel).decode('ascii'),
         'ccel_table': base64.b64encode(table).decode('ascii'),
-        'os_build': json.loads(Path('/usr/lib/h-image/os-build.json').read_text()),
+        'os_build': json.loads(Path('/usr/lib/ada-image/os-build.json').read_text()),
         'boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
     }
     # Port 2 has its own buffer: ordinary boot output stays on port 1.
@@ -107,7 +107,7 @@ def main():
                     raise OSError('serial evidence write failed')
                 remaining = remaining[written:]
         termios.tcdrain(serial.fileno())
-    print('H_IMAGE_EVIDENCE_READY: public quote and CCEL exported on serial port 2', flush=True)
+    print('ADA_IMAGE_EVIDENCE_READY: public quote and CCEL exported on serial port 2', flush=True)
     # Collection is not DCAP verification, CCEL replay, or platform approval.
 
 

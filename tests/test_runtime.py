@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'image/mkosi.skeleton/usr/lib/h-image/check-runtime'
+SCRIPT = Path(__file__).resolve().parents[1] / 'image/mkosi.skeleton/usr/lib/ada-image/check-runtime'
 VERITY_STATUS = '''/dev/mapper/root is active and is in use.
   type:        VERITY
   status:      verified
@@ -45,10 +45,10 @@ class RuntimeCheckTests(unittest.TestCase):
         return text.getvalue()
 
     def test_uppercase_verity_reaches_ready(self):
-        self.assertIn('H_IMAGE_OS_READY:', self.check_runtime())
+        self.assertIn('ADA_IMAGE_OS_READY:', self.check_runtime())
 
     def test_signed_verity_reaches_ready(self):
-        self.assertIn('H_IMAGE_OS_READY:', self.check_runtime(VERITY_STATUS.replace('verified', 'verified (with signature)')))
+        self.assertIn('ADA_IMAGE_OS_READY:', self.check_runtime(VERITY_STATUS.replace('verified', 'verified (with signature)')))
 
     def test_unprotected_or_corrupt_roots_are_rejected(self):
         for status in (

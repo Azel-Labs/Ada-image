@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: h-image-${{ github.ref }}
+  group: ada-image-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -26,9 +26,9 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GITHUB_WORKFLOW_SHA: ${{ github.workflow_sha }}
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'cypherpunklabs' }}
-      GCP_IMAGE_BUCKET: ${{ vars.GCP_IMAGE_BUCKET || 'cypherpunklabs-hiro-images' }}
-      GCP_IMAGE_PUBLISHER: ${{ vars.GCP_IMAGE_PUBLISHER || 'hiro-image-publisher@cypherpunklabs.iam.gserviceaccount.com' }}
-      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER || 'projects/1069855069526/locations/global/workloadIdentityPools/hiro-image-publisher/providers/hiro-vm-image' }}
+      GCP_IMAGE_BUCKET: ${{ vars.GCP_IMAGE_BUCKET || 'cypherpunklabs-ada-images' }}
+      GCP_IMAGE_PUBLISHER: ${{ vars.GCP_IMAGE_PUBLISHER || 'ada-image-publisher@cypherpunklabs.iam.gserviceaccount.com' }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER || 'projects/1069855069526/locations/global/workloadIdentityPools/ada-image-publisher/providers/ada-image' }}
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -121,7 +121,7 @@ jobs:
           prerelease=()
           if [[ "$RELEASE_TAG" == *-* ]]; then prerelease+=(--prerelease); fi
           gh release create "$RELEASE_TAG" dist/publish/* --repo "$GITHUB_REPOSITORY" \
-            --verify-tag --draft --title "hiro-image $RELEASE_TAG" --generate-notes
+            --verify-tag --draft --title "ada-image $RELEASE_TAG" --generate-notes
           # Compare server-stored assets before making the release visible.
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir dist/published
           (cd dist/published && sha256sum --check SHA256SUMS)
@@ -131,7 +131,7 @@ jobs:
         if: success() && !(startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push')
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: h-image-${{ github.sha }}
+          name: ada-image-${{ github.sha }}
           path: dist/publish/
           retention-days: 7
           compression-level: 0
@@ -139,7 +139,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: h-image-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          name: ada-image-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             dist/boot*.log
             dist/boot-check.json

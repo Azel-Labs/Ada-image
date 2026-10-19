@@ -11,7 +11,7 @@ require(re.fullmatch('[0-9a-f]{40}', revision), 'invalid TDX helper revision')
 commit = os.environ.get('GITHUB_SHA') or subprocess.check_output(
     ['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
 require(re.fullmatch('[0-9a-f]{40}', commit), 'source commit required')
-target = ROOT / 'image/mkosi.extra/usr/lib/h-image'
+target = ROOT / 'image/mkosi.extra/usr/lib/ada-image'
 require(not target.exists(), 'staged tree exists; remove image/mkosi.extra before a new build')
 target.mkdir(parents=True)
 tools = ROOT / 'dist/tools'
@@ -26,5 +26,5 @@ require(not any(line.split() and line.split()[0] in ('INTERP', 'DYNAMIC') for li
 shutil.copyfile(tools / 'extend', target / 'tdx-extend')
 (target / 'tdx-extend').chmod(0o755)
 write_json(target / 'os-build.json', {'schema': 1, 'version': version(), 'source_commit': commit,
-                                   'workload_contract': 'h-image.workload.v1', 'tdx_tools_revision': revision})
+                                   'workload_contract': 'ada-image.workload.v1', 'tdx_tools_revision': revision})
 print('Staged OS identity and pinned TDX helper; no workload or credentials')

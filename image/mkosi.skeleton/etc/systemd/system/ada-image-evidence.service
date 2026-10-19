@@ -1,14 +1,14 @@
 [Unit]
 Description=Export requested public TDX boot evidence to serial port 2
 ConditionPathExists=/sys/firmware/acpi/tables/CCEL
-Requires=h-image-ready.service
+Requires=ada-image-ready.service
 Wants=network-online.target
-After=h-image-ready.service network-online.target
-Before=h-image-workload.service
+After=ada-image-ready.service network-online.target
+Before=ada-image-workload.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 /usr/lib/h-image/export-evidence
+ExecStart=/usr/bin/python3 /usr/lib/ada-image/export-evidence
 StandardOutput=journal+console
 StandardError=journal+console
 TimeoutStartSec=120

@@ -44,15 +44,15 @@ with tarfile.open(args.workload, mode='r:') as archive:
 shutil.copyfile(args.workload, out / 'workload.tar')
 workload_hash = digest(out / 'workload.tar')
 disk = out / 'disk.raw'
-with tarfile.open(base / 'h-image-gcp.tar.gz', 'r:gz') as archive:
+with tarfile.open(base / 'ada-image-gcp.tar.gz', 'r:gz') as archive:
     members = archive.getmembers()
     require(len(members) == 1 and members[0].name == 'disk.raw'
             and members[0].isfile() and members[0].size == manifest['disk']['size'], 'invalid OS disk archive')
     archive.extractall(out, filter='data')
 require(digest(disk) == manifest['disk']['sha256'], 'OS disk does not match the signed base release')
 cmdline = (base / 'cmdline').read_text().strip()
-require('h-image.workload_sha256' not in cmdline, 'base image already selects a workload')
-cmdline += ' h-image.workload_sha256=' + workload_hash
+require('ada-image.workload_sha256' not in cmdline, 'base image already selects a workload')
+cmdline += ' ada-image.workload_sha256=' + workload_hash
 (out / 'cmdline').write_text(cmdline + '\n')
 run('ukify', 'build', '--linux=' + str(base / 'vmlinuz'), '--initrd=' + str(base / 'initrd'),
     '--stub=' + str(base / 'linuxx64.efi.stub'), '--os-release=@' + str(base / 'os-release'),
@@ -83,7 +83,7 @@ workload_disk = out / 'workload.raw'
 with workload_disk.open('wb') as stream:
     gib = 1024 ** 3
     stream.truncate(((args.workload.stat().st_size + 128 * 1024 ** 2 + gib - 1) // gib) * gib)
-run('mkfs.ext4', '-q', '-F', '-L', 'hiro-workload', '-d', staging, workload_disk)
+run('mkfs.ext4', '-q', '-F', '-L', 'ada-workload', '-d', staging, workload_disk)
 shutil.rmtree(staging)
 archive_disk(workload_disk, out / 'workload-disk.tar.gz')
 for name in ['os-release.json', 'os-release.sigstore.json', PROFILE]:
@@ -91,7 +91,7 @@ for name in ['os-release.json', 'os-release.sigstore.json', PROFILE]:
 require(PROFILE in manifest['files'], 'selected OS did not authenticate a platform profile')
 platform_appraisal = appraisal(out / PROFILE, gpt, pe_hash, sections, base / 'linuxx64.efi.stub')
 release = {
-    'schema': 1, 'kind': 'h-image.deployment.v1', 'workload_contract': 'h-image.workload.v1',
+    'schema': 1, 'kind': 'ada-image.deployment.v1', 'workload_contract': 'ada-image.workload.v1',
     'os': {'repository': args.os_repository, 'tag': args.os_version,
            'source_commit': manifest['source_commit'], 'manifest_sha256': digest(base / 'os-release.json')},
     'workload_sha256': workload_hash, 'boot': {

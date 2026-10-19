@@ -12,7 +12,7 @@ def verify(directory, repository, tag):
     require(re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?', tag), 'select an explicit version tag')
     manifest_path = directory / 'os-release.json'
     data = json.loads(manifest_path.read_text())
-    require(data.get('kind') == 'h-image.os-release.v1' and data.get('tag') == tag,
+    require(data.get('kind') == 'ada-image.os-release.v1' and data.get('tag') == tag,
             'wrong OS manifest or version')
     require(data['source_repository'] == repository and data['source_ref'] == 'refs/tags/' + tag,
             'OS release repository/ref mismatch')
@@ -33,7 +33,7 @@ def verify(directory, repository, tag):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--repository', required=True, help='Owner/h-image, the trusted OS release repository')
+    parser.add_argument('--repository', required=True, help='Owner/ada-image, the trusted OS release repository')
     parser.add_argument('--version', required=True, help='Exact release tag, for example v0.1.0')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--verify-only', action='store_true')

@@ -17,14 +17,14 @@ from image_lib import (ROOT, ESP, ROOT_PARTITION, VERITY, TOOL_PATHS, archive_di
 
 validate_release_inputs()
 dist = ROOT / 'dist'
-disk = dist / 'image/h-image.raw'
+disk = dist / 'image/ada-image.raw'
 out = dist / 'publish'
 require(not out.exists(), 'publish directory already exists; use a clean build')
 out.mkdir()
 parts = partitions(disk)
 require(disk.stat().st_size % (1024 ** 3) == 0, 'boot-check must finalize the GCP disk before packaging')
 gpt = measure_gpt(disk)
-uki = out / 'h-image.efi'
+uki = out / 'ada-image.efi'
 run('mcopy', '-i', f'{disk}@@{parts[ESP]["start"] * 512}', '::/EFI/BOOT/BOOTX64.EFI', uki)
 pe_hash, sections = measure_pe(uki.read_bytes())
 for section, name in [('linux', 'vmlinuz'), ('initrd', 'initrd'), ('cmdline', 'cmdline'),
@@ -35,10 +35,10 @@ for name in ('cmdline', 'os-release', 'uname'):
     p.write_bytes(p.read_bytes().rstrip(b'\0'))
 cmdline = (out / 'cmdline').read_text()
 root_hashes = re.findall(r'(?:^|\s)roothash=([0-9a-f]{64})(?=\s|$)', cmdline)
-require(len(root_hashes) == 1 and 'h-image.workload_sha256' not in cmdline,
+require(len(root_hashes) == 1 and 'ada-image.workload_sha256' not in cmdline,
         'base OS must bind its root hash and must not select an application')
 partition_hashes = {}
-with tempfile.TemporaryDirectory(prefix='h-image-verity-') as temporary:
+with tempfile.TemporaryDirectory(prefix='ada-image-verity-') as temporary:
     tmp = Path(temporary)
     for kind, name in [(ROOT_PARTITION, 'root'), (VERITY, 'verity')]:
         copy_partition(disk, parts[kind], tmp / name)
@@ -48,14 +48,14 @@ with tempfile.TemporaryDirectory(prefix='h-image-verity-') as temporary:
     # only the UKI, preserving this OS's kernel/initrd/stub and root filesystem.
     with (out / 'linuxx64.efi.stub').open('wb') as output:
         run('unsquashfs', '-cat', tmp / 'root', 'usr/lib/systemd/boot/efi/linuxx64.efi.stub', stdout=output)
-inventory = dist / 'image/h-image.manifest'
+inventory = dist / 'image/ada-image.manifest'
 require(inventory.is_file(), 'mkosi package inventory missing')
 json.loads(inventory.read_text())
 shutil.copyfile(inventory, out / 'packages.json')
 boot = json.loads((dist / 'boot-check.json').read_text())
 require(boot.get('uefi_boot') == 'passed', 'base OS boot check must pass before packaging')
 shutil.copyfile(dist / 'boot-check.json', out / 'boot-check.json')
-archive_disk(disk, out / 'h-image-gcp.tar.gz')
+archive_disk(disk, out / 'ada-image-gcp.tar.gz')
 profile_path = ROOT / 'platform' / PROFILE
 load_profile(profile_path, check_evidence=True)
 shutil.copyfile(profile_path, out / PROFILE)
@@ -67,10 +67,10 @@ platform_appraisal = appraisal(out / PROFILE, gpt, pe_hash, sections, out / 'lin
 with tarfile.open(out / 'image-tools.tar.gz', mode='w:gz') as archive:
     for name in TOOL_PATHS:
         archive.add(ROOT / name, arcname=name)
-identity = json.loads((ROOT / 'image/mkosi.extra/usr/lib/h-image/os-build.json').read_text())
+identity = json.loads((ROOT / 'image/mkosi.extra/usr/lib/ada-image/os-build.json').read_text())
 workflow_commit = os.environ.get('GITHUB_WORKFLOW_SHA', identity['source_commit'])
 manifest = {
-    'schema': 1, 'kind': 'h-image.os-release.v1', 'version': version(), 'tag': 'v' + version(),
+    'schema': 1, 'kind': 'ada-image.os-release.v1', 'version': version(), 'tag': 'v' + version(),
     'source_repository': os.environ.get('GITHUB_REPOSITORY'),
     'source_commit': identity['source_commit'],
     'source_ref': os.environ.get('GITHUB_REF', 'local'), 'workflow_commit': workflow_commit,
@@ -86,10 +86,10 @@ manifest = {
     'platform_appraisal': platform_appraisal,
     'guest_os_features': ['TDX_CAPABLE', 'UEFI_COMPATIBLE', 'GVNIC', 'VIRTIO_SCSI_MULTIQUEUE'],
     'licenses': ['https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/licenses/ubuntu-2604-lts'],
-    'workload': {'contract': 'h-image.workload.v1', 'embedded': False,
-                 'kernel_parameter': 'h-image.workload_sha256', 'filesystem_label': 'hiro-workload',
+    'workload': {'contract': 'ada-image.workload.v1', 'embedded': False,
+                 'kernel_parameter': 'ada-image.workload_sha256', 'filesystem_label': 'ada-workload',
                  'archive': '/mnt/workload/workload.tar', 'entrypoint': 'start'},
-    'configuration': {'filesystem_label': 'hiro-config', 'environment_file': '/mnt/config/secrets.env',
+    'configuration': {'filesystem_label': 'ada-config', 'environment_file': '/mnt/config/secrets.env',
                        'embedded_credentials': False},
 }
 write_json(out / 'os-release.json', manifest)

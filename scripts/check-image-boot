@@ -19,10 +19,10 @@ dist = ROOT / 'dist'
 dist.mkdir(exist_ok=True)
 log_path = dist / ('boot-preflight.log' if args.preflight else 'boot.log')
 if not args.preflight:
-    finalize_disk(dist / 'image/h-image.raw')
-with tempfile.TemporaryDirectory(prefix='h-image-boot-') as temporary:
-    code = Path(os.environ['H_IMAGE_OVMF'])
-    template = Path(os.environ['H_IMAGE_OVMF_VARS'])
+    finalize_disk(dist / 'image/ada-image.raw')
+with tempfile.TemporaryDirectory(prefix='ada-image-boot-') as temporary:
+    code = Path(os.environ['ADA_IMAGE_OVMF'])
+    template = Path(os.environ['ADA_IMAGE_OVMF_VARS'])
     require(code.is_file() and template.is_file(), 'both OVMF flash files are required')
     variables = Path(temporary) / 'vars.fd'
     shutil.copyfile(template, variables)
@@ -38,7 +38,7 @@ with tempfile.TemporaryDirectory(prefix='h-image-boot-') as temporary:
     if args.preflight:
         command += ['-S', '-serial', 'none', '-qmp', 'stdio']
     else:
-        command += ['-drive', f'file={dist}/image/h-image.raw,format=raw,if=virtio,snapshot=on', '-serial', 'stdio']
+        command += ['-drive', f'file={dist}/image/ada-image.raw,format=raw,if=virtio,snapshot=on', '-serial', 'stdio']
     with log_path.open('wb') as log:
         vm = subprocess.Popen(command, stderr=log,
                               stdout=subprocess.PIPE if args.preflight else log,
@@ -59,10 +59,10 @@ with tempfile.TemporaryDirectory(prefix='h-image-boot-') as temporary:
                     require(vm.poll() is None, 'UEFI guest exited; see dist/boot.log')
                     text = log_path.read_text(errors='replace')
                     plain = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
-                    require(not re.search(r'Failed to start (?:h-image-ready|docker|containerd)\.serv', plain),
+                    require(not re.search(r'Failed to start (?:ada-image-ready|docker|containerd)\.serv', plain),
                             'a required guest service failed; serial output follows')
-                    if 'H_IMAGE_OS_READY: dm-verity root, Docker, Compose and TDX helper ready' in text:
-                        require('H_IMAGE_WORKLOAD_VERIFIED:' not in text, 'base OS unexpectedly launched an application')
+                    if 'ADA_IMAGE_OS_READY: dm-verity root, Docker, Compose and TDX helper ready' in text:
+                        require('ADA_IMAGE_WORKLOAD_VERIFIED:' not in text, 'base OS unexpectedly launched an application')
                         break
                     time.sleep(2)
                 else:

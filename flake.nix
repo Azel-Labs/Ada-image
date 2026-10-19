@@ -1,5 +1,5 @@
 {
-  description = "Pinned h-image OS build and application-release tooling";
+  description = "Pinned ada-image OS build and application-release tooling";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/c5ae371f1a6a7fd27823bc500d9390b38c05fa55";
   outputs = { self, nixpkgs }:
     let
@@ -8,7 +8,7 @@
       diskTools = with pkgs; [ cryptsetup dosfstools e2fsprogs mtools squashfsTools zstd ];
       builder = pkgs.mkosi.override { extraDeps = diskTools ++ [ pkgs.apt pkgs.dpkg pkgs.gnupg ]; };
       search = pkgs.buildEnv {
-        name = "h-image-tools";
+        name = "ada-image-tools";
         paths = builder.dependencies;
         pathsToLink = [ "/bin" ];
         ignoreCollisions = true;
@@ -24,8 +24,8 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [ mkosi ukify qemu_test apt dpkg binutils util-linux gptfdisk
           python3 go git gzip gnutar coreutils gh openssl ] ++ diskTools;
-        H_IMAGE_OVMF = "${pkgs.OVMF.fd}/FV/OVMF_CODE.fd";
-        H_IMAGE_OVMF_VARS = "${pkgs.OVMF.fd}/FV/OVMF_VARS.fd";
+        ADA_IMAGE_OVMF = "${pkgs.OVMF.fd}/FV/OVMF_CODE.fd";
+        ADA_IMAGE_OVMF_VARS = "${pkgs.OVMF.fd}/FV/OVMF_VARS.fd";
       };
     };
 }

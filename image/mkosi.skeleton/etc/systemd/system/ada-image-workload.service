@@ -1,14 +1,14 @@
 [Unit]
 Description=Verify and start the separately released workload
-ConditionKernelCommandLine=h-image.workload_sha256
-Requires=docker.service h-image-ready.service
-After=docker.service h-image-ready.service network-online.target
+ConditionKernelCommandLine=ada-image.workload_sha256
+Requires=docker.service ada-image-ready.service
+After=docker.service ada-image-ready.service network-online.target
 Wants=network-online.target
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/lib/h-image/load-workload
+ExecStart=/usr/lib/ada-image/load-workload
 WorkingDirectory=/
 StandardOutput=journal+console
 StandardError=journal+console

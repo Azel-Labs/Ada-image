@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "kind": "h-image.gcp-tdx-platform.v1",
+  "kind": "ada-image.gcp-tdx-platform.v1",
   "id": "gcp-c3-standard-4-20261014",
   "mrtd": "c1ee9c16e3afc506cfe042c5b846a368528f3b37618eafb27469bc114cf914e9222c91618470e7f2b28ac360968270a5",
   "launch": {

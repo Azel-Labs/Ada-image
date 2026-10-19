@@ -14,7 +14,7 @@ import subprocess
 def decode(text, nonce):
     if not re.fullmatch('[0-9a-f]{128}', nonce):
         raise ValueError('nonce file must contain 128 lowercase hex characters')
-    prefix = 'H_IMAGE_EVIDENCE_V1 ' + nonce + ' '
+    prefix = 'ADA_IMAGE_EVIDENCE_V1 ' + nonce + ' '
     begin = end = None
     chunks = {}
     for line in text.splitlines():
@@ -50,7 +50,7 @@ def decode(text, nonce):
     if len(raw) > 24 * 1024 * 1024:
         raise ValueError('oversized decoded evidence')
     data = json.loads(raw)
-    if data.get('schema') != 'h-image.boot-evidence.v1' or data.get('nonce') != nonce:
+    if data.get('schema') != 'ada-image.boot-evidence.v1' or data.get('nonce') != nonce:
         raise ValueError('wrong evidence schema or challenge')
     files = {name: base64.b64decode(data[key], validate=True) for name, key in
              [('quote.bin', 'quote'), ('ccel.bin', 'ccel'), ('ccel-table.bin', 'ccel_table')]}

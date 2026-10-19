@@ -18,7 +18,7 @@ if ref.startswith('refs/tags/'):
 lock = json.loads((ROOT / 'flake.lock').read_text())
 require(re.fullmatch('[0-9a-f]{40}', (ROOT / 'image/tdx-tools-revision').read_text().strip()), 'invalid helper pin')
 require(lock['nodes']['nixpkgs']['locked']['rev'] in (ROOT / 'flake.nix').read_text(), 'Nix builder pin and lock disagree')
-for path in list((ROOT / 'scripts').iterdir()) + list((ROOT / 'image/mkosi.skeleton/usr/lib/h-image').iterdir()):
+for path in list((ROOT / 'scripts').iterdir()) + list((ROOT / 'image/mkosi.skeleton/usr/lib/ada-image').iterdir()):
     if path.is_file():
         ast.parse(path.read_text(), filename=str(path))
 for path in [ROOT / 'image/mkosi.postinst.chroot', ROOT / 'image/mkosi.finalize',

@@ -1,13 +1,13 @@
 [Unit]
-Description=Check h-image runtime and immutable root
+Description=Check ada-image runtime and immutable root
 Requires=docker.service
 After=docker.service
-Before=h-image-workload.service
+Before=ada-image-workload.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/lib/h-image/check-runtime
+ExecStart=/usr/lib/ada-image/check-runtime
 StandardOutput=journal+console
 StandardError=journal+console
 LimitCORE=0

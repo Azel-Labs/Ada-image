@@ -16,7 +16,7 @@ SECTION_ORDER = ['.linux', '.osrel', '.cmdline', '.initrd', '.uname', '.sbat']
 def load_profile(path, check_evidence=False):
     path = Path(path)
     profile = json.loads(path.read_text())
-    require(profile.get('schema') == 1 and profile.get('kind') == 'h-image.gcp-tdx-platform.v1',
+    require(profile.get('schema') == 1 and profile.get('kind') == 'ada-image.gcp-tdx-platform.v1',
             'unsupported GCP platform profile')
     hex_digest(profile['mrtd'])
     require(profile['uki']['section_order'] == SECTION_ORDER, 'unqualified UKI measurement order')

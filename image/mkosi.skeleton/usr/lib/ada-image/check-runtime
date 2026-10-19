@@ -11,7 +11,7 @@ def run(*args):
 
 root = json.loads(run('findmnt', '--json', '--target', '/', '--output', 'SOURCE,OPTIONS'))['filesystems'][0]
 if 'ro' not in root['options'].split(',') or not root['source'].startswith(('/dev/mapper/', '/dev/dm-')):
-    raise SystemExit('h-image requires a read-only device-mapper root')
+    raise SystemExit('ada-image requires a read-only device-mapper root')
 verity = run('veritysetup', 'status', root['source'])
 # veritysetup prints its device type as uppercase VERITY. Inspect the actual
 # fields, not a substring which could also match a device or backing-file name.
@@ -25,6 +25,6 @@ if Path('/proc/swaps').read_text().splitlines()[1:]:
     raise SystemExit('swap must be disabled')
 run('docker', 'info', '--format', '{{.ServerVersion}}')
 run('docker', 'compose', 'version')
-subprocess.run(['/usr/lib/h-image/tdx-extend', '-help'], check=True,
+subprocess.run(['/usr/lib/ada-image/tdx-extend', '-help'], check=True,
                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-print('H_IMAGE_OS_READY: dm-verity root, Docker, Compose and TDX helper ready', flush=True)
+print('ADA_IMAGE_OS_READY: dm-verity root, Docker, Compose and TDX helper ready', flush=True)
