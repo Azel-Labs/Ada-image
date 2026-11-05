@@ -5,8 +5,20 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+      # APT 3.1.5 can exhaust memory by accumulating delayed-download warnings
+      # (Debian #1111554). Use the upstream fix only for the image builder.
+      buildApt = pkgs.apt.overrideAttrs (_: {
+        version = "3.1.8";
+        src = pkgs.fetchFromGitLab {
+          domain = "salsa.debian.org";
+          owner = "apt-team";
+          repo = "apt";
+          rev = "3.1.8";
+          hash = "sha256-11TjB8tlX3KeBb1IbEWEhnSIaLQOygwYRaLPkkWKvX0=";
+        };
+      });
       diskTools = with pkgs; [ cryptsetup dosfstools e2fsprogs mtools squashfsTools zstd ];
-      builder = pkgs.mkosi.override { extraDeps = diskTools ++ [ pkgs.apt pkgs.dpkg pkgs.gnupg ]; };
+      builder = pkgs.mkosi.override { extraDeps = diskTools ++ [ buildApt pkgs.dpkg pkgs.gnupg ]; };
       search = pkgs.buildEnv {
         name = "ada-image-tools";
         paths = builder.dependencies;
@@ -22,7 +34,7 @@
       '';
     in {
       devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [ mkosi ukify qemu_test apt dpkg binutils util-linux gptfdisk
+        packages = with pkgs; [ mkosi ukify qemu_test buildApt dpkg binutils util-linux gptfdisk
           python3 go git gzip gnutar coreutils gh openssl ] ++ diskTools;
         ADA_IMAGE_OVMF = "${pkgs.OVMF.fd}/FV/OVMF_CODE.fd";
         ADA_IMAGE_OVMF_VARS = "${pkgs.OVMF.fd}/FV/OVMF_VARS.fd";
