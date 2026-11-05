@@ -1,0 +1,37 @@
+{
+  "result": "passed",
+  "verification_time_utc": "2026-11-05T14:37:32+00:00",
+  "source_repository": "Azel-Labs/Ada-image",
+  "source_commit": "b3cbb3013a0961eaa2e0a78b8c9bccd4686ac00a",
+  "source_ref": "refs/heads/main",
+  "reference_vm": "ada-image-qualify-b3cbb301",
+  "reference_vm_id": "1788544193191292160",
+  "gcp_image": "ada-image-b3cbb3013a09-42021419506-2",
+  "intel_tdx_status": "UpToDate",
+  "advisory_ids": [],
+  "tdx_debug": false,
+  "nonce_matches": true,
+  "google_firmware_signature_valid": true,
+  "google_firmware_binary_hash_matches": true,
+  "configuration_firmware_volume_hash_matches": true,
+  "google_endorsed_mrtd_matches": true,
+  "all_four_rtmr_replays_match": true,
+  "release_sigstore_identity_verified": true,
+  "measured_gpt_and_uki_match_signed_manifest": true,
+  "measured_uki_sections_match_artifacts": true,
+  "launch_configuration_matches": true,
+  "acpi_reference_method": "Captured RTMR0 digests from the authenticated GCP TDX boot with the recorded machine shape. ACPI tables are not independently reconstructed offline.",
+  "scope": "Qualified base OS boot. Additional disks or changed launch settings require comparison against these references; they are not qualified by this single-disk capture.",
+  "verifiers": {
+    "intel": "dcap-qvl 0.6.5",
+    "sigstore": "GitHub CLI 2.83.0; exact repository/workflow/source ref/source commit/workflow commit; GitHub-hosted runner",
+    "google": "OpenSSL certificate and RSA-PSS-SHA256 verification against pinned Google GCE TCB root",
+    "image": "scripts/boot_measurements.py and scripts/platform_measurements.py"
+  },
+  "exported_uki_packaging_issue": {
+    "sha256": "a2525d13b08152a2422fea203ada868360a411e57c81f5824c8da3935c51bb3b",
+    "pe_coff_sha384": "e9f91d53364e029089912c5b0f2d2425903342dc8505efc2c10ac0de6fde55bfb67a1556560870de4fca679ccde390f2",
+    "matches_booted_uki": false,
+    "reason": "package-image invokes objcopy --dump-section without an output file, rewriting its input; the boot disk is unaffected"
+  }
+}

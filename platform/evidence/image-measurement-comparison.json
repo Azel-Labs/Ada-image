@@ -1,12 +1,30 @@
 {
   "GPT": {
-    "expected": "618639c0840269c83f1db1af0c6fd305ea159a0c57e8d4c7ff6a58c511e93731fc052475973080ac83d9ea775df2fe55",
-    "measured": "618639c0840269c83f1db1af0c6fd305ea159a0c57e8d4c7ff6a58c511e93731fc052475973080ac83d9ea775df2fe55",
+    "expected": "26106a0764d3bb2c158a5c44654c39f885066641f992963cd2378eb0dc8e53f0c526014d0b41f2d0f12c10e6be7c4687",
+    "measured": "26106a0764d3bb2c158a5c44654c39f885066641f992963cd2378eb0dc8e53f0c526014d0b41f2d0f12c10e6be7c4687",
     "matches": true
   },
   "UKI": {
-    "expected": "6adb35b74f88a5122c2522313af44f6a6db6d4b027719f18b14d567d7dd34a7171473295034ea582880520c81878abd8",
-    "measured": "6adb35b74f88a5122c2522313af44f6a6db6d4b027719f18b14d567d7dd34a7171473295034ea582880520c81878abd8",
+    "expected": "37cf8b4aefc9aef44a52fb09f93b3618d64d8931f964bf9a81e25734e0cbbeb342f245c1d13d7e7bb3951b608c525419",
+    "measured": "37cf8b4aefc9aef44a52fb09f93b3618d64d8931f964bf9a81e25734e0cbbeb342f245c1d13d7e7bb3951b608c525419",
     "matches": true
+  },
+  "sections": {
+    ".sbat": "8ca352ede2cc2d88bc9eca63be5416161668df72872abaa1262db3e3c96d55ef2353301dcb27c4127b82669b182e8b05",
+    ".osrel": "80a288dacb9d8a4c4176ba566b298e03d45c7e4820ab41c0a550495b00a721d23052ad767da37465d78e46068956441f",
+    ".cmdline": "67c8635233672cbdcb38955205e1bc51e93015f5806edcc6d5b8a0ce92b0692060c7e4df48e5814d909fd4dd2d46990d",
+    ".uname": "f3981a90f87e96abb0bc847f25a983d58ffb815e8b8e1636e3ccfdc9d778577da72d72e23bebda2bc0bbcc398f1d3bd7",
+    ".linux": "6ce2fa279d15f1ced00fcb55a1d7dffadc994f165d74a33e28c0d782e13556cad3a6b9139465ad5eb73832795e8f1c94",
+    ".initrd": "69db0f72c72684b7a68ff4b76261510dc9335bea5dd67565482d5ab2a0a1b4ba82ed0b817496ef9cd73ede70e4f783de"
+  },
+  "disk_sha256": "2ab0c72bbe5ca83644356a09e4331d26a6fc811f4f37849e4447f41d837fab18",
+  "stub_sha256": "81860e6a527c0cff65c8c8c238618b86c97397a6d2e7680eac3586f5cc811240",
+  "independently_recalculated_from_artifacts": true,
+  "uki_source": "BOOTX64.EFI extracted directly from the authenticated disk archive",
+  "exported_uki": {
+    "sha256": "a2525d13b08152a2422fea203ada868360a411e57c81f5824c8da3935c51bb3b",
+    "pe_coff_sha384": "e9f91d53364e029089912c5b0f2d2425903342dc8505efc2c10ac0de6fde55bfb67a1556560870de4fca679ccde390f2",
+    "matches_booted_uki": false,
+    "reason": "package-image invokes objcopy --dump-section without an output file, rewriting its input; the boot disk is unaffected"
   }
 }

@@ -29,7 +29,8 @@ run('mcopy', '-i', f'{disk}@@{parts[ESP]["start"] * 512}', '::/EFI/BOOT/BOOTX64.
 pe_hash, sections = measure_pe(uki.read_bytes())
 for section, name in [('linux', 'vmlinuz'), ('initrd', 'initrd'), ('cmdline', 'cmdline'),
                       ('osrel', 'os-release'), ('uname', 'uname')]:
-    run('objcopy', '--dump-section', f'.{section}={out / name}', uki)
+    # Export the already parsed section bytes without rewriting the measured UKI.
+    (out / name).write_bytes(sections['.' + section])
 for name in ('cmdline', 'os-release', 'uname'):
     p = out / name
     p.write_bytes(p.read_bytes().rstrip(b'\0'))

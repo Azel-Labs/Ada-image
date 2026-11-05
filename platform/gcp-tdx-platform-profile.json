@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "kind": "ada-image.gcp-tdx-platform.v1",
-  "id": "gcp-c3-standard-4-20261014",
-  "mrtd": "c1ee9c16e3afc506cfe042c5b846a368528f3b37618eafb27469bc114cf914e9222c91618470e7f2b28ac360968270a5",
+  "id": "gcp-c3-standard-4-20261105",
+  "mrtd": "f21e6b48743fe14c2d090078ca1197f09ae4c99438677f2c79901ef80e2aeefe2f9a7eb6e3eb3b5047c4f1511731e5d3",
   "launch": {
     "provider": "GCP",
     "zone": "us-central1-a",
@@ -18,11 +18,11 @@
   },
   "scope": "Qualified base OS boot. Additional disks or changed launch settings require comparison against these references; they are not qualified by this single-disk capture.",
   "firmware": {
-    "reference_url": "https://storage.googleapis.com/gce_tcb_integrity/ovmf_x64_csm/tdx/c1ee9c16e3afc506cfe042c5b846a368528f3b37618eafb27469bc114cf914e9222c91618470e7f2b28ac360968270a5.binarypb",
-    "sha256": "9bb40f84dd373261baba826c05a3fa2f3f88471f713bdebb2f537764d1c96471",
+    "reference_url": "https://storage.googleapis.com/gce_tcb_integrity/ovmf_x64_csm/tdx/f21e6b48743fe14c2d090078ca1197f09ae4c99438677f2c79901ef80e2aeefe2f9a7eb6e3eb3b5047c4f1511731e5d3.binarypb",
+    "sha256": "cb00c3a4d12675b3a59592e3c9e69d33e37f48d95328b014883df5af0e0db693",
     "google_tcb_root_sha256": "e876bc6978bf4f3da445f98a0a82363c8c0bae5a1fc033c6df65846a6cb0f18c",
-    "firmware_sha384": "53c558fe06714203d7428484c46ee7c0b9df748a9789e173421c28d097115b30efb8476304617532488ab40c3122db88",
-    "firmware_binary_url": "https://storage.googleapis.com/gce_tcb_integrity/ovmf_x64_csm/53c558fe06714203d7428484c46ee7c0b9df748a9789e173421c28d097115b30efb8476304617532488ab40c3122db88.fd",
+    "firmware_sha384": "624ac419f063f0d17a261e6ba512174cd174194ffd06e72531dce3514ec7e148aa876331b95dfa20cd4341004b280fb1",
+    "firmware_binary_url": "https://storage.googleapis.com/gce_tcb_integrity/ovmf_x64_csm/624ac419f063f0d17a261e6ba512174cd174194ffd06e72531dce3514ec7e148aa876331b95dfa20cd4341004b280fb1.fd",
     "tdx_svn": 2,
     "memory_gib": 0,
     "early_accept": false
@@ -46,7 +46,7 @@
     {
       "type": 2147483658,
       "description": "configuration firmware volume",
-      "sha384": "4e1221cf6f7815beec39a994bff99142ed305210e2735b1134fc8ef363923cbdcca91fa71e2e25ee8e689fb7d2c075bf"
+      "sha384": "98f78a03fdbd6f31e54b65dd0518b9a043b05c700339efb71ffae8335d6d1e60395dc5b0c719d5c1ccb41af64fd88849"
     },
     {
       "type": 2147483649,
@@ -81,17 +81,17 @@
     {
       "type": 10,
       "description": "ACPI data 1",
-      "sha384": "f60c35e53bb21b4675cfa8db310ec88e38cd369d8d463acdde815122fa8b893b8896a5783b538856693ed7645ddb897e"
+      "sha384": "ee0cc4f8fa34d548c7bad109ad5da7a7469c6a84967b919120b63bdfd9a50def29f37e0b7f0d40110304c70f1615998f"
     },
     {
       "type": 10,
       "description": "ACPI data 2",
-      "sha384": "509dcfe10beb5d470c40f25e30895370948831b9cf79db15d977e7bba8eb42f7200212071ad8b19d6011759779eced5a"
+      "sha384": "957129f88ef987bf483b2fd0b8b7fab43b5477e394a683f74fbf662217e8fa2279c2fed9b877ccea0c9b9be916b55cca"
     },
     {
       "type": 10,
       "description": "ACPI data 3",
-      "sha384": "0bb0afa008873bdc20dee0f741da7896c2bfeee94ae52e9bdbf94bc87c32d04a4b1f1d824490f1dae574ff6d4e4bb0b3"
+      "sha384": "70cb7693cd1bee8a9870f8ab7b049e06960196c7f3c1a486b771d8205446ede22d45b7bcc3bbc0e9ec44b5eb7df3b84d"
     },
     {
       "type": 2147483650,
@@ -109,7 +109,7 @@
       "sha384": "23ada07f5261f12f34a0bd8e46760962d6b4d576a416f1fea1c64bc656b1d28eacf7047ae6e967c58fd2a98bfa74c298"
     }
   ],
-  "rtmr0": "c49d22aff6edb37cb6178defb05e0e2b512c26960e6ee73b1ea303365a31def807ab2ad71e5874236feca2ca552c6307",
+  "rtmr0": "48ab35e114e8a9fc0e8c35ab171c457c36d40ae5f040c738e51cc4ba6cdf7c371a7d877ff3f12e2af3fd8745682f9693",
   "uki": {
     "stub_sha256": "81860e6a527c0cff65c8c8c238618b86c97397a6d2e7680eac3586f5cc811240",
     "section_order": [
@@ -123,30 +123,31 @@
     "measurement": "systemd-stub section name including ASCII NUL, then virtual-size section bytes; SHA384 extensions into RTMR2"
   },
   "evidence": {
-    "verified_at": "2026-10-14T09:32:19+00:00",
-    "source_commit": "ab3303529d586efff5c2982559c757b67bd70a34",
-    "source_repository": "CypherpunkLabs-AI/hiro-vm-image",
+    "verified_at": "2026-11-05T14:37:32+00:00",
+    "source_commit": "b3cbb3013a0961eaa2e0a78b8c9bccd4686ac00a",
+    "source_repository": "Azel-Labs/Ada-image",
     "source_ref": "refs/heads/main",
     "hardware_verifier": "dcap-qvl 0.6.5",
     "collateral_source": "https://api.trustedservices.intel.com",
-    "image_verifier": "GitHub CLI 2.102.0 gh attestation verify; exact repository, workflow, source/workflow commit and ref; GitHub-hosted runners only",
+    "image_verifier": "GitHub CLI 2.83.0; exact repository/workflow/source ref/source commit/workflow commit; GitHub-hosted runner",
     "files": {
-      "ccel-replay.json": "4f820a6c9d5e85896ab75c30a847a6a5a4396eb2729d4f2f0ee168a6f12a5f04",
+      "ccel-replay.json": "e0c2ed61016490140dfee4734e4012a18a5efa5fcd3744b81a03ff62a50e52ed",
       "ccel-table.bin": "c716398993cc26ddb97450072db1970cb6c7e102f0e3666a0b8f873204324829",
-      "ccel.bin": "87699e4e0791507ee8d685969d88038664bb4ab41a8f7af5430464c9fff7ab02",
-      "google-firmware-verification.json": "ad5b95fa44c3f8b8b4ac104d5549d6a840a3827d8d98dcac326a6dc76e51a858",
-      "google-launch-endorsement.binarypb": "9bb40f84dd373261baba826c05a3fa2f3f88471f713bdebb2f537764d1c96471",
+      "ccel.bin": "06eade6f9375ece81c1c4e464b51d1e8ae3334fd9f9c76279fbaac17129783f4",
+      "google-firmware-verification.json": "4d801dc5d04f61c9b102f1f56aaf16314db056fc67889cc1d1c8c4cf41e33f98",
+      "google-launch-endorsement.binarypb": "cb00c3a4d12675b3a59592e3c9e69d33e37f48d95328b014883df5af0e0db693",
       "google-tcb-root.crt": "e876bc6978bf4f3da445f98a0a82363c8c0bae5a1fc033c6df65846a6cb0f18c",
       "google-tcb-root.pem": "924f25618b1aeb442469c2a318803b2438dc905ff58c54be91ca90ba77cfed74",
-      "image-measurement-comparison.json": "45c736326ffebe9cb83772e5d38a989e24ba6605b7c2fe167bc7fb391e60f04a",
-      "instance.json": "413874ef6c8bbd3d6956c5b7b96541aec51028fda76e14503a712d95653dba02",
-      "intel-collateral.json": "a647b68f920ee5e097e1fd62940020473ed68dcf3f6add4335fd0e9cc4054654",
-      "intel-quote-verification.json": "8fbb0e405e459654ddd28344f6fc7d0cbd7c3d68ea225d00b7a18c210e0e5721",
-      "nonce.bin": "3fca4a1061f4565b6c30c30538525d914037f2790aa266217366e38b6ac95792",
-      "os-release.json": "b76fc7b3ffb34625c59ec5a5a90660608fbb54b972bd76961cb7868847789913",
-      "os-release.sigstore.json": "6f38349a6fdd6c8f0d3172ebcec691f89ff91eff187306dacfaaf8428cc78220",
-      "quote.bin": "8b80a2811a5df83e5711049a29efd5134d0f160bf35f1bb5925d6d3972d8eca8",
-      "sigstore-verification.json": "c2f7dc3d1e3bc7fead49c037833ed634cd43a405635b4dc75c2cf06e32ba917a"
+      "image-measurement-comparison.json": "422206b2d89e08b0735188771e28ebc5f55fa41790f8fe6e5ce33fd0d1d822a7",
+      "instance.json": "edb155d30da73f5f2198edf2899c6dbf5e0032cb9e9113c3d48619751b4b81b2",
+      "intel-collateral.json": "bcfafbf6028987a3402da3bf1c0329c0b5e9de5cabcce5d8ecc99345f0dcaee5",
+      "intel-quote-verification.json": "78cb821a6c0e5ec1de0441aee3041f19c0108d3a542fb9206efa2c8d51431fa5",
+      "nonce.bin": "18e8b67e8fde0391c8a98bbebae1e6a548a8ed344003b4aec217acb531693b82",
+      "os-release.json": "d76405c52eb47085c68cf5a9adf8e69aba1ece6eeec5aa29e23fd8c5c6997598",
+      "os-release.sigstore.json": "bf59b322cb7f6f026c08a0899e1e43b267306438d07805719f76c1518ba925c0",
+      "qualification-summary.json": "240db72b549274c5b89571d0e7f593ba8aed9b67cb2f52c9e77a3d48151bf9f7",
+      "quote.bin": "8b037b28600231be50b43221ef017c0ea1883f8cd42226c27eb83a192c6ea7d4",
+      "sigstore-verification.json": "5956f8a9702c1dc9fbccbb4a0a2a4620b3735bc885aaa307129b1ff7c7754cba"
     }
   }
 }

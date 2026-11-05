@@ -1,7 +1,7 @@
 {
   "architecture": "x86_64",
   "boot": {
-    "dm_verity_root_hash": "7a9d17ba029980f366c78ae9306a24d44f17a066e37e0aa9db154d353f04394e",
+    "dm_verity_root_hash": "4ca914f32efa5ac5f0f73be1d78a1a580ef94801d40d920e528fff693e69f34c",
     "gpt_event": {
       "disk_guid": "93d5f617-c0bc-425a-b13d-24817f2f0286",
       "esp_size_lba": 532480,
@@ -9,69 +9,80 @@
       "event_bytes": 484,
       "partition_count": 3,
       "sector_size": 512,
-      "sha384": "618639c0840269c83f1db1af0c6fd305ea159a0c57e8d4c7ff6a58c511e93731fc052475973080ac83d9ea775df2fe55"
+      "sha384": "26106a0764d3bb2c158a5c44654c39f885066641f992963cd2378eb0dc8e53f0c526014d0b41f2d0f12c10e6be7c4687"
     },
-    "kernel_command_line": "console=ttyS0 ro panic=10 systemd.show_status=yes roothash=7a9d17ba029980f366c78ae9306a24d44f17a066e37e0aa9db154d353f04394e",
+    "kernel_command_line": "console=ttyS0 ro panic=10 systemd.show_status=yes roothash=4ca914f32efa5ac5f0f73be1d78a1a580ef94801d40d920e528fff693e69f34c",
     "sections_sha256": {
-      ".cmdline": "e7c62e590c3600dfa6790c75bd47ed0af6f70b071777f37b9845c016202edf3a",
-      ".initrd": "1fe280b9d38756776aa58ae4bbf8b189175b6779228457b2a5713fa72ea4b045",
-      ".linux": "6c6fedb7573d36db1e655569d51925089e88d964814b9ba43ae41eaee0be55b7"
+      ".cmdline": "15c04a73dedd8710f1b8a51fb87e5f8de4b5d7bfa7e705815e6b3a62c7a97ba8",
+      ".initrd": "e34019e739cb94e128a35003b1414afba7f6a4fbb584cf24b367cd6bb6e9210e",
+      ".linux": "6c6fedb7573d36db1e655569d51925089e88d964814b9ba43ae41eaee0be55b7",
+      ".osrel": "e3e645f075820d6dd6757fb809b6cf876e5f29d10083b6b05c1da00f4257b2f1",
+      ".sbat": "64fb2be5405275a22622bbf68c538a9e2d41e987755c03ee2a56576ad41c6bf4",
+      ".uname": "cc56941400c35e89346e158e90de840b07e23dfc76af3e6eb0f1cb324abb0234"
     },
     "secure_boot": false,
-    "uki_pe_coff_sha384": "6adb35b74f88a5122c2522313af44f6a6db6d4b027719f18b14d567d7dd34a7171473295034ea582880520c81878abd8"
+    "uki_pe_coff_sha384": "37cf8b4aefc9aef44a52fb09f93b3618d64d8931f964bf9a81e25734e0cbbeb342f245c1d13d7e7bb3951b608c525419"
   },
   "build_workflow": ".github/workflows/image.yml",
   "configuration": {
     "embedded_credentials": false,
     "environment_file": "/mnt/config/secrets.env",
-    "filesystem_label": "hiro-config"
+    "filesystem_label": "ada-config"
   },
   "disk": {
     "partitions_sha256": {
-      "root": "c32e89782b87362525fee708ca0b6d20e9aef8a5e7a10ea42d5ac209ca723d8a",
-      "verity": "893374f88fa8e694a2dd6d996a5e599111d07393ee7af4226fde40afb6d3d9a8"
+      "root": "c961d321392f3dc95beae8285190d4a4d2ca119dadf321df03f223cc3637aa02",
+      "verity": "161e869bf03044b21de890d5b3cc1cb8a4c5b24fe1bc7de2662e65e00e9b08e9"
     },
-    "sha256": "e1b48cd0e8770086e7a5b0ab42b74ebc6ff363ba6e37c37c29d2c5c97e6b4ffb",
+    "sha256": "2ab0c72bbe5ca83644356a09e4331d26a6fc811f4f37849e4447f41d837fab18",
     "size": 1073741824
   },
   "distribution": "ubuntu",
   "distribution_release": "resolute",
   "files": {
+    "ada-image-gcp.tar.gz": {
+      "sha256": "6f1357edf7911df53a86c78df51cf3dbc539fdd16b426c1781734a1aa0103490",
+      "size": 441507963
+    },
+    "ada-image.efi": {
+      "sha256": "a2525d13b08152a2422fea203ada868360a411e57c81f5824c8da3935c51bb3b",
+      "size": 57919488
+    },
     "boot-check.json": {
       "sha256": "3277927d2670322c44df0019936f87cdc0489068a01eb63c0a7543d94d8d1090",
       "size": 311
     },
     "cmdline": {
-      "sha256": "7c93a382a9505bd2532ec3894986293d5c782cd31de54452afc936776af2067f",
+      "sha256": "d03ddb676e5bab05b6397e35e1210702c9189e94f29b94bb1cea270c7b50dc8c",
       "size": 123
     },
-    "h-image-gcp.tar.gz": {
-      "sha256": "47d78ee66e0ecd07be31bb24d87aa52abaff8c73fc68db8bfc64c48043592ee3",
-      "size": 441506345
-    },
-    "h-image.efi": {
-      "sha256": "fc5c9b985ec561d8d1b51b57fd26085c1c94052c7ebffcfc8e8bea174690f957",
-      "size": 57919488
+    "gcp-tdx-platform-profile.json": {
+      "sha256": "7fff6db8bbdef6d7558b1b029d3005d4402c5a57e6d184b386d2b051c64aca61",
+      "size": 7465
     },
     "image-tools.tar.gz": {
-      "sha256": "c8f39f620f704a1e81484dc5dfc297ddc5a0e6a16fec72b9a4163ee7e7289515",
-      "size": 28499
+      "sha256": "b2357e22a836f0628b36fd7fc0869337fcdb299b290ac4e300bfc01384bbda5d",
+      "size": 23057
     },
     "initrd": {
-      "sha256": "1fe280b9d38756776aa58ae4bbf8b189175b6779228457b2a5713fa72ea4b045",
-      "size": 40314132
+      "sha256": "e34019e739cb94e128a35003b1414afba7f6a4fbb584cf24b367cd6bb6e9210e",
+      "size": 40313984
     },
     "linuxx64.efi.stub": {
       "sha256": "81860e6a527c0cff65c8c8c238618b86c97397a6d2e7680eac3586f5cc811240",
       "size": 118784
     },
     "os-release": {
-      "sha256": "240dabe3f35f6764d9144818bfa81fa7f64b062ec30458d687f3e07290f3136f",
-      "size": 429
+      "sha256": "e3e645f075820d6dd6757fb809b6cf876e5f29d10083b6b05c1da00f4257b2f1",
+      "size": 431
     },
     "packages.json": {
-      "sha256": "77f9d5c257657a6d49e5ada4b22acbe33959a0db5533f021d689bc28523584a2",
-      "size": 19107
+      "sha256": "b8c2ea365af05caf919ac111d5a11b84e09b68e93cfdcf50336363af15a31175",
+      "size": 19109
+    },
+    "platform-evidence.tar.gz": {
+      "sha256": "8b6420a40faa322ef6efb5635d989c0e43b9df6d4e60105659841d99f7118d1b",
+      "size": 73082
     },
     "uname": {
       "sha256": "cc56941400c35e89346e158e90de840b07e23dfc76af3e6eb0f1cb324abb0234",
@@ -88,30 +99,158 @@
     "GVNIC",
     "VIRTIO_SCSI_MULTIQUEUE"
   ],
-  "kind": "h-image.os-release.v1",
+  "kind": "ada-image.os-release.v1",
   "licenses": [
     "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/licenses/ubuntu-2604-lts"
   ],
   "nix_lock_sha256": "6e7d12ab099dd5df29691985c7f9cec8dc3236f6f83e52ed0875911ac977ef6b",
   "platform_appraisal": {
-    "reason": "MRTD and firmware event references belong to the qualified deployment platform",
-    "status": "not-included"
+    "expected_boot": {
+      "mrtd": "c1ee9c16e3afc506cfe042c5b846a368528f3b37618eafb27469bc114cf914e9222c91618470e7f2b28ac360968270a5",
+      "rtmr0": "c49d22aff6edb37cb6178defb05e0e2b512c26960e6ee73b1ea303365a31def807ab2ad71e5874236feca2ca552c6307",
+      "rtmr1": "40176c948c94d066a1cabe0cb8cc6f5e5861f96e59657bd6e5b28796dca17bf9528390c85d46a33eb8027250e11bb278",
+      "rtmr1_events": [
+        {
+          "description": "Calling EFI Application from Boot Option",
+          "sha384": "77a0dab2312b4e1e57a84d865a21e5b2ee8d677a21012ada819d0a98988078d3d740f6346bfe0abaa938ca20439a8d71",
+          "type": 2147483655
+        },
+        {
+          "description": "separator",
+          "sha384": "394341b7182cd227c5c6b07ef8000cdfd86136c4292b8e576573ad7ed9ae41019f5818b4b971c9effc60e1ad9f1289f0",
+          "type": 4
+        },
+        {
+          "description": "GPT",
+          "sha384": "26106a0764d3bb2c158a5c44654c39f885066641f992963cd2378eb0dc8e53f0c526014d0b41f2d0f12c10e6be7c4687",
+          "type": 2147483654
+        },
+        {
+          "description": "UKI Authenticode",
+          "sha384": "37cf8b4aefc9aef44a52fb09f93b3618d64d8931f964bf9a81e25734e0cbbeb342f245c1d13d7e7bb3951b608c525419",
+          "type": 2147483651
+        },
+        {
+          "description": "Exit Boot Services Invocation",
+          "sha384": "214b0bef1379756011344877743fdc2a5382bac6e70362d624ccf3f654407c1b4badf7d8f9295dd3dabdef65b27677e0",
+          "type": 2147483655
+        },
+        {
+          "description": "Exit Boot Services Returned with Success",
+          "sha384": "0a2e01c85deae718a530ad8c6d20a84009babe6c8989269e950d8cf440c6e997695e64d455c4174a652cd080f6230b74",
+          "type": 2147483655
+        }
+      ],
+      "rtmr2": "dbeaa5a05d326f607cd5da2e98e601f4479439b9ce9c37f81617acb817ecf7b797413f387c963146df4d0061fa9f17f6",
+      "rtmr2_events": [
+        {
+          "description": ".linux name",
+          "sha384": "2fdc8531577607d99031d70fb3063e9e4aecf50a7eaa9c2b0bcda5c5a6e111302996c138465920cadea4416d36089651",
+          "type": 13
+        },
+        {
+          "description": ".linux contents",
+          "sha384": "6ce2fa279d15f1ced00fcb55a1d7dffadc994f165d74a33e28c0d782e13556cad3a6b9139465ad5eb73832795e8f1c94",
+          "type": 13
+        },
+        {
+          "description": ".osrel name",
+          "sha384": "1d6077a2797911c374edbc610fa01e184a1e8e4492ff35a1e355efeaf330e7c8cb03492dac7ee13d3efa6f099e0bbc81",
+          "type": 13
+        },
+        {
+          "description": ".osrel contents",
+          "sha384": "80a288dacb9d8a4c4176ba566b298e03d45c7e4820ab41c0a550495b00a721d23052ad767da37465d78e46068956441f",
+          "type": 13
+        },
+        {
+          "description": ".cmdline name",
+          "sha384": "93c4536618d5be4a74e2cb9caa0a4d8975ce70dc9efe0c53aa4cedbcda9d02f60c8a68fd01f960b876f9dd31818a6f41",
+          "type": 13
+        },
+        {
+          "description": ".cmdline contents",
+          "sha384": "67c8635233672cbdcb38955205e1bc51e93015f5806edcc6d5b8a0ce92b0692060c7e4df48e5814d909fd4dd2d46990d",
+          "type": 13
+        },
+        {
+          "description": ".initrd name",
+          "sha384": "1bcd2ed729fb9dc7b1a168ab4a6e2e04b66d7405ea2622d666780ec9f1eceb031010f0bdf37c46ab34e6a7201b73d5ae",
+          "type": 13
+        },
+        {
+          "description": ".initrd contents",
+          "sha384": "69db0f72c72684b7a68ff4b76261510dc9335bea5dd67565482d5ab2a0a1b4ba82ed0b817496ef9cd73ede70e4f783de",
+          "type": 13
+        },
+        {
+          "description": ".uname name",
+          "sha384": "16b48d924b98bdfe9d5c97983801443e5371dae2de1a9911636b417b1b14a7d54d9c648a8c64510c3dbd5d6060387171",
+          "type": 13
+        },
+        {
+          "description": ".uname contents",
+          "sha384": "f3981a90f87e96abb0bc847f25a983d58ffb815e8b8e1636e3ccfdc9d778577da72d72e23bebda2bc0bbcc398f1d3bd7",
+          "type": 13
+        },
+        {
+          "description": ".sbat name",
+          "sha384": "52a957bc706ceae8f202046a07342684b10ce67c73756def7713fe1246935abe07f7043f6b76d78e1e05772aaa46c56c",
+          "type": 13
+        },
+        {
+          "description": ".sbat contents",
+          "sha384": "8ca352ede2cc2d88bc9eca63be5416161668df72872abaa1262db3e3c96d55ef2353301dcb27c4127b82669b182e8b05",
+          "type": 13
+        }
+      ],
+      "rtmr3": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "launch": {
+      "boot_disk_interface": "NVME",
+      "confidential_instance_type": "TDX",
+      "integrity_monitoring": true,
+      "machine_type": "c3-standard-4",
+      "nic_type": "GVNIC",
+      "provider": "GCP",
+      "reference_boot_disk_gib": 10,
+      "reference_disk_count": 1,
+      "secure_boot": false,
+      "vtpm": true,
+      "zone": "us-central1-a"
+    },
+    "live_quote_verified": false,
+    "profile": "gcp-tdx-platform-profile.json",
+    "profile_id": "gcp-c3-standard-4-20261014",
+    "profile_sha256": "7fff6db8bbdef6d7558b1b029d3005d4402c5a57e6d184b386d2b051c64aca61",
+    "quote_requirements": {
+      "allowed_advisory_ids": [],
+      "debug": false,
+      "mr_config_id": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "mr_seam": "ab62561a173acbd18ee50ff37750db44184c6cf5e886df74247cc575e163b04c34b9e18374757c235affa614d4127f6b",
+      "mr_signer_seam": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "seam_attributes": "0000000000000000",
+      "verification_status": "UpToDate"
+    },
+    "rtmr3_scope": "Before application startup. Application RTMR3 extensions must be separately appraised.",
+    "scope": "Qualified base OS boot. Additional disks or changed launch settings require comparison against these references; they are not qualified by this single-disk capture.",
+    "status": "included"
   },
   "schema": 1,
-  "source_commit": "ab3303529d586efff5c2982559c757b67bd70a34",
+  "source_commit": "b3cbb3013a0961eaa2e0a78b8c9bccd4686ac00a",
   "source_ref": "refs/heads/main",
-  "source_repository": "CypherpunkLabs-AI/hiro-vm-image",
-  "tag": "v0.1.0",
+  "source_repository": "Azel-Labs/Ada-image",
+  "tag": "v0.2.1",
   "tdx_tools_revision": "b0a2dd8100a04a52310c6f7869dbc14297e39e8b",
   "ubuntu_snapshot": "20261009T000000Z",
-  "version": "0.1.0",
-  "workflow_commit": "ab3303529d586efff5c2982559c757b67bd70a34",
+  "version": "0.2.1",
+  "workflow_commit": "b3cbb3013a0961eaa2e0a78b8c9bccd4686ac00a",
   "workload": {
     "archive": "/mnt/workload/workload.tar",
-    "contract": "h-image.workload.v1",
+    "contract": "ada-image.workload.v1",
     "embedded": false,
     "entrypoint": "start",
-    "filesystem_label": "hiro-workload",
-    "kernel_parameter": "h-image.workload_sha256"
+    "filesystem_label": "ada-workload",
+    "kernel_parameter": "ada-image.workload_sha256"
   }
 }

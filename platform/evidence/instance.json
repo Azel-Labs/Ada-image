@@ -1,15 +1,14 @@
 {
   "confidentialInstanceConfig": {
-    "confidentialInstanceType": "TDX",
-    "enableConfidentialCompute": true
+    "confidentialInstanceType": "TDX"
   },
-  "creationTimestamp": "2026-10-14T02:18:45.227-07:00",
+  "creationTimestamp": "2026-11-05T06:34:23.390-08:00",
   "disks": [
     {
       "architecture": "X86_64",
       "autoDelete": true,
       "boot": true,
-      "deviceName": "instance-20261014-091343",
+      "deviceName": "persistent-disk-0",
       "diskSizeGb": "10",
       "guestOsFeatures": [
         {
@@ -32,14 +31,14 @@
         "https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/licenses/ubuntu-2604-lts"
       ],
       "mode": "READ_WRITE",
-      "source": "https://www.googleapis.com/compute/v1/projects/cypherpunklabs/zones/us-central1-a/disks/instance-20261014-091343",
+      "source": "https://www.googleapis.com/compute/v1/projects/cypherpunklabs/zones/us-central1-a/disks/ada-image-qualify-b3cbb301",
       "type": "PERSISTENT"
     }
   ],
-  "id": "5693705192325969434",
-  "lastStartTimestamp": "2026-10-14T02:18:52.767-07:00",
+  "id": "1788544193191292160",
+  "lastStartTimestamp": "2026-11-05T06:34:36.504-08:00",
   "machineType": "https://www.googleapis.com/compute/v1/projects/cypherpunklabs/zones/us-central1-a/machineTypes/c3-standard-4",
-  "name": "instance-20261014-091343",
+  "name": "ada-image-qualify-b3cbb301",
   "networkInterfaces": [
     {
       "nicType": "GVNIC"
