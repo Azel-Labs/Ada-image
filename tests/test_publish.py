@@ -31,7 +31,7 @@ class PublishTests(unittest.TestCase):
         (self.directory / 'ada-image-gcp.tar.gz').write_bytes(archive)
         self.environment = {
             'GITHUB_SHA': 'a' * 40, 'GITHUB_WORKFLOW_SHA': 'a' * 40,
-            'GITHUB_REPOSITORY': 'CypherpunkLabs-AI/Ada-vm-image',
+            'GITHUB_REPOSITORY': 'Azel-Labs/Ada-image',
             'GITHUB_REF': 'refs/heads/main', 'GITHUB_EVENT_NAME': 'push',
             'GITHUB_RUN_ID': '42', 'GITHUB_RUN_ATTEMPT': '1',
             'GITHUB_STEP_SUMMARY': str(self.root / 'summary'),
